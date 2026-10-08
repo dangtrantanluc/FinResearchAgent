@@ -1,0 +1,1236 @@
+{
+  "k": 6,
+  "n_questions": 20,
+  "summary": [
+    {
+      "mode": "lexical",
+      "recall": 0.7,
+      "mrr": 0.5333,
+      "recall_en": 0.4,
+      "recall_vi": 1.0
+    },
+    {
+      "mode": "dense",
+      "recall": 1.0,
+      "mrr": 0.7292,
+      "recall_en": 1.0,
+      "recall_vi": 1.0
+    },
+    {
+      "mode": "hybrid",
+      "recall": 1.0,
+      "mrr": 0.7517,
+      "recall_en": 1.0,
+      "recall_vi": 1.0
+    },
+    {
+      "mode": "hybrid_rerank",
+      "recall": 0.95,
+      "mrr": 0.8167,
+      "recall_en": 0.9,
+      "recall_vi": 1.0
+    }
+  ],
+  "per_question": [
+    {
+      "id": "fpt-01",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 4.0,
+      "pages": [
+        14,
+        53,
+        52,
+        105,
+        159,
+        134
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-01",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 4.0,
+      "pages": [
+        41,
+        41,
+        52,
+        105,
+        14,
+        41
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-01",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 2.0,
+      "pages": [
+        14,
+        105,
+        105,
+        53,
+        52,
+        41
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-01",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        105,
+        14,
+        105,
+        108,
+        53,
+        52
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-02",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": NaN,
+      "pages": [
+        56,
+        108,
+        54,
+        112,
+        102,
+        112
+      ],
+      "hit": false
+    },
+    {
+      "id": "fpt-02",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        47,
+        89,
+        7,
+        47,
+        50,
+        52
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-02",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        47,
+        89,
+        21,
+        47,
+        54,
+        7
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-02",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 6.0,
+      "pages": [
+        7,
+        52,
+        89,
+        50,
+        50,
+        47
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-03",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        158,
+        119,
+        158,
+        166,
+        168,
+        190
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-03",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        119,
+        158,
+        187,
+        52,
+        121,
+        187
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-03",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        119,
+        158,
+        122,
+        85,
+        121,
+        50
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-03",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        119,
+        117,
+        158,
+        50,
+        187,
+        190
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-04",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        13,
+        22,
+        3,
+        202,
+        21,
+        22
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-04",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        13,
+        3,
+        64,
+        22,
+        13,
+        202
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-04",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        13,
+        3,
+        22,
+        202,
+        64,
+        57
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-04",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        13,
+        105,
+        3,
+        21,
+        57,
+        64
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-05",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 3.0,
+      "pages": [
+        56,
+        41,
+        49,
+        49,
+        52,
+        55
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-05",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 2.0,
+      "pages": [
+        41,
+        52,
+        41,
+        52,
+        49,
+        56
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-05",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 3.0,
+      "pages": [
+        41,
+        56,
+        52,
+        49,
+        41,
+        49
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-05",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 2.0,
+      "pages": [
+        41,
+        52,
+        49,
+        49,
+        55,
+        41
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-06",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": NaN,
+      "pages": [
+        202,
+        70,
+        91,
+        53,
+        91,
+        70
+      ],
+      "hit": false
+    },
+    {
+      "id": "fpt-06",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        60,
+        60,
+        109,
+        24,
+        125,
+        103
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-06",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        60,
+        202,
+        60,
+        70,
+        109,
+        91
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-06",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        60,
+        60,
+        125,
+        103,
+        125,
+        16
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-07",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 4.0,
+      "pages": [
+        190,
+        190,
+        80,
+        50,
+        91,
+        91
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-07",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 3.0,
+      "pages": [
+        190,
+        190,
+        50,
+        106,
+        50,
+        30
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-07",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 3.0,
+      "pages": [
+        190,
+        190,
+        50,
+        50,
+        80,
+        106
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-07",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 6.0,
+      "pages": [
+        80,
+        190,
+        91,
+        91,
+        190,
+        50
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-08",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": NaN,
+      "pages": [
+        15,
+        70,
+        88,
+        88,
+        132,
+        88
+      ],
+      "hit": false
+    },
+    {
+      "id": "fpt-08",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        12,
+        17,
+        99,
+        24,
+        54,
+        47
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-08",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 3.0,
+      "pages": [
+        60,
+        4,
+        12,
+        15,
+        17,
+        70
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-08",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        12,
+        49,
+        17,
+        54,
+        24,
+        198
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-09",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        53,
+        52,
+        17,
+        49,
+        55,
+        63
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-09",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        52,
+        17,
+        53,
+        49,
+        53,
+        11
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-09",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        52,
+        53,
+        17,
+        49,
+        55,
+        53
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-09",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        52,
+        17,
+        49,
+        55,
+        7,
+        53
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-10",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": NaN,
+      "pages": [
+        199,
+        123,
+        132,
+        208,
+        208,
+        86
+      ],
+      "hit": false
+    },
+    {
+      "id": "fpt-10",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 2.0,
+      "pages": [
+        86,
+        47,
+        44,
+        85,
+        47,
+        5
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-10",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 3.0,
+      "pages": [
+        86,
+        44,
+        47,
+        47,
+        5,
+        85
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-10",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": NaN,
+      "pages": [
+        8,
+        5,
+        86,
+        57,
+        57,
+        44
+      ],
+      "hit": false
+    },
+    {
+      "id": "fpt-11",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        4,
+        23,
+        28,
+        30,
+        31,
+        4
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-11",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 2.0,
+      "pages": [
+        23,
+        4,
+        30,
+        24,
+        24,
+        24
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-11",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 2.0,
+      "pages": [
+        23,
+        4,
+        30,
+        28,
+        31,
+        4
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-11",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        4,
+        34,
+        23,
+        4,
+        30,
+        4
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-12",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": 3.0,
+      "pages": [
+        9,
+        8,
+        34,
+        52,
+        14,
+        55
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-12",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 6.0,
+      "pages": [
+        50,
+        3,
+        23,
+        23,
+        54,
+        34
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-12",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        34,
+        35,
+        50,
+        9,
+        3,
+        8
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-12",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        34,
+        3,
+        34,
+        34,
+        30,
+        50
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-13",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        56,
+        56,
+        56,
+        57,
+        57,
+        48
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-13",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        56,
+        56,
+        56,
+        57,
+        57,
+        57
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-13",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        56,
+        56,
+        56,
+        57,
+        57,
+        57
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-13",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        56,
+        56,
+        57,
+        57,
+        56,
+        57
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-14",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        8,
+        26,
+        31,
+        82,
+        61,
+        4
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-14",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        4,
+        26,
+        25,
+        8,
+        8,
+        37
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-14",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        26,
+        8,
+        4,
+        82,
+        31,
+        25
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-14",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        4,
+        26,
+        8,
+        37,
+        14,
+        26
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-15",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        63,
+        63,
+        59,
+        41,
+        36,
+        48
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-15",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        63,
+        56,
+        63,
+        56,
+        51,
+        36
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-15",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        63,
+        63,
+        36,
+        56,
+        59,
+        63
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-15",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        63,
+        51,
+        63,
+        51,
+        56,
+        9
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-16",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        55,
+        55,
+        42,
+        98,
+        69,
+        70
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-16",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 3.0,
+      "pages": [
+        175,
+        103,
+        55,
+        55,
+        5,
+        103
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-16",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        55,
+        55,
+        103,
+        175,
+        175,
+        83
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-16",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        55,
+        175,
+        55,
+        5,
+        103,
+        175
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-17",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 2.0,
+      "pages": [
+        17,
+        68,
+        52,
+        48,
+        52,
+        25
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-17",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        68,
+        17,
+        30,
+        77,
+        119,
+        123
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-17",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        68,
+        17,
+        30,
+        52,
+        77,
+        30
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-17",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        68,
+        17,
+        52,
+        138,
+        119,
+        77
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-18",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": NaN,
+      "pages": [
+        98,
+        147,
+        147,
+        84,
+        228,
+        228
+      ],
+      "hit": false
+    },
+    {
+      "id": "fpt-18",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 2.0,
+      "pages": [
+        70,
+        7,
+        15,
+        70,
+        50,
+        30
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-18",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 5.0,
+      "pages": [
+        53,
+        52,
+        70,
+        98,
+        7,
+        147
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-18",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 2.0,
+      "pages": [
+        70,
+        7,
+        147,
+        70,
+        147,
+        30
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-19",
+      "lang": "vi",
+      "mode": "lexical",
+      "rank": 1.0,
+      "pages": [
+        55,
+        55,
+        103,
+        83,
+        82,
+        57
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-19",
+      "lang": "vi",
+      "mode": "dense",
+      "rank": 1.0,
+      "pages": [
+        55,
+        55,
+        103,
+        71,
+        103,
+        8
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-19",
+      "lang": "vi",
+      "mode": "hybrid",
+      "rank": 1.0,
+      "pages": [
+        55,
+        55,
+        103,
+        71,
+        8,
+        57
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-19",
+      "lang": "vi",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        55,
+        55,
+        71,
+        8,
+        5,
+        103
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-20",
+      "lang": "en",
+      "mode": "lexical",
+      "rank": NaN,
+      "pages": [
+        107,
+        208,
+        208,
+        24,
+        63,
+        25
+      ],
+      "hit": false
+    },
+    {
+      "id": "fpt-20",
+      "lang": "en",
+      "mode": "dense",
+      "rank": 2.0,
+      "pages": [
+        53,
+        45,
+        7,
+        5,
+        52,
+        24
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-20",
+      "lang": "en",
+      "mode": "hybrid",
+      "rank": 2.0,
+      "pages": [
+        53,
+        45,
+        63,
+        25,
+        24,
+        5
+      ],
+      "hit": true
+    },
+    {
+      "id": "fpt-20",
+      "lang": "en",
+      "mode": "hybrid_rerank",
+      "rank": 1.0,
+      "pages": [
+        45,
+        18,
+        53,
+        5,
+        8,
+        7
+      ],
+      "hit": true
+    }
+  ]
+}

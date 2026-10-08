@@ -1,0 +1,19 @@
+name: finresearch
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: finresearch
+      POSTGRES_PASSWORD: finresearch
+      POSTGRES_DB: finresearch
+    ports:
+      - "127.0.0.1:5433:5432"  # 5433 on the host so it never collides with a local Postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U finresearch -d finresearch"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  pgdata:

@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+data/
+# copies the notebook writes when it is run from notebooks/
+notebooks/finresearch/
+notebooks/reference/
+notebooks/data/
+notebooks/artifacts/
+.env
+runs/

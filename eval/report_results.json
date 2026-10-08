@@ -1,0 +1,870 @@
+{
+  "mode": "llm",
+  "summary": [
+    {
+      "id": "fpt-vi",
+      "claims": 19,
+      "kept": 19,
+      "dropped_deterministic": 0,
+      "dropped_unsupported": 0,
+      "qualitative": 11,
+      "supported": 10,
+      "partial": 1,
+      "unchecked": 0,
+      "evidence": 17,
+      "seconds": 35,
+      "models": "gemini-3-flash-preview, gemini-3.5-flash-lite",
+      "failed_calls": 1
+    },
+    {
+      "id": "fpt-en",
+      "claims": 21,
+      "kept": 21,
+      "dropped_deterministic": 0,
+      "dropped_unsupported": 0,
+      "qualitative": 9,
+      "supported": 9,
+      "partial": 0,
+      "unchecked": 0,
+      "evidence": 17,
+      "seconds": 50,
+      "models": "gemini-3.5-flash, gemini-3.5-flash-lite",
+      "failed_calls": 0
+    },
+    {
+      "id": "hpg-vi",
+      "claims": 18,
+      "kept": 17,
+      "dropped_deterministic": 1,
+      "dropped_unsupported": 0,
+      "qualitative": 0,
+      "supported": 0,
+      "partial": 0,
+      "unchecked": 0,
+      "evidence": 0,
+      "seconds": 31,
+      "models": "gemini-3.5-flash, gemini-3.5-flash-lite",
+      "failed_calls": 0
+    },
+    {
+      "id": "mwg-en",
+      "claims": 17,
+      "kept": 17,
+      "dropped_deterministic": 0,
+      "dropped_unsupported": 0,
+      "qualitative": 0,
+      "supported": 0,
+      "partial": 0,
+      "unchecked": 0,
+      "evidence": 0,
+      "seconds": 69,
+      "models": "gemini-3-flash-preview, gemini-3.5-flash-lite",
+      "failed_calls": 1
+    },
+    {
+      "id": "fpt-elc",
+      "claims": 22,
+      "kept": 22,
+      "dropped_deterministic": 0,
+      "dropped_unsupported": 0,
+      "qualitative": 5,
+      "supported": 5,
+      "partial": 0,
+      "unchecked": 0,
+      "evidence": 17,
+      "seconds": 30,
+      "models": "gemini-3-flash-preview, gemini-3.5-flash-lite",
+      "failed_calls": 1
+    }
+  ],
+  "claims": {
+    "fpt-vi": [
+      {
+        "section": "summary",
+        "text": "FPT duy trì đà tăng trưởng hai chữ số với doanh thu năm 2025 đạt {{FPT.revenue.2025}} và lợi nhuận sau thuế đạt {{FPT.net_income.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The figures match the bracketed values and are supported by the text."
+      },
+      {
+        "section": "summary",
+        "text": "Động lực tăng trưởng chính đến từ mảng dịch vụ công nghệ thông tin cho thị trường nước ngoài và sự phục hồi nhu cầu công nghệ từ khối ngân hàng.",
+        "kept": true,
+        "support": "partial",
+        "problems": [],
+        "reason": "Foreign IT services is supported, but recovery from banking is in the 2024 passage rather than 2025 growth drivers."
+      },
+      {
+        "section": "revenue",
+        "text": "Doanh thu thuần của tập đoàn tăng trưởng từ {{FPT.revenue.2022}} vào năm 2022 lên {{FPT.revenue.2025}} vào năm 2025, đạt tốc độ tăng trưởng kép hàng năm là {{FPT.revenue_cagr.2022_2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "All bracketed figures are present and supported."
+      },
+      {
+        "section": "revenue",
+        "text": "Lĩnh vực dịch vụ công nghệ thông tin nước ngoài đóng góp 35.382 tỷ đồng doanh thu trong năm 2025, với doanh thu ký mới vượt mốc 1,5 tỷ USD.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Foreign IT revenue and signed contracts match the passage."
+      },
+      {
+        "section": "revenue",
+        "text": "Hệ sinh thái sản phẩm Made by FPT cũng ghi nhận sự dịch chuyển mạnh mẽ với mức tăng trưởng 31,0% trong năm 2024.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The 2024 Made by FPT growth rate and revenue match the passage."
+      },
+      {
+        "section": "profitability",
+        "text": "Lợi nhuận sau thuế năm 2025 đạt {{FPT.net_income.2025}}, tăng trưởng {{FPT.net_income_g.2025}} so với năm trước.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "All bracketed values for net profit and its growth rate are supported."
+      },
+      {
+        "section": "profitability",
+        "text": "Tốc độ tăng trưởng lợi nhuận cao hơn doanh thu cho thấy hiệu quả vận hành được cải thiện và chi phí được kiểm soát tốt.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The statement directly matches the text in the passage."
+      },
+      {
+        "section": "profitability",
+        "text": "Chỉ số ROE năm 2025 đạt {{FPT.roe.2025}}, nằm ở {{FPT.roe_sector_pct.2025}} so với các doanh nghiệp cùng ngành.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "All bracketed figures are present and supported."
+      },
+      {
+        "section": "profitability",
+        "text": "Khối Công nghệ tiếp tục giữ vai trò chủ chốt khi đóng góp 45,3% vào tổng lợi nhuận trước thuế của tập đoàn năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Technology segment's pre-tax profit contribution of 45.3% is explicitly stated."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Dòng tiền từ hoạt động kinh doanh năm 2025 ở mức {{FPT.cfo.2025}}, trong khi dòng tiền tự do đạt {{FPT.fcf.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "All bracketed figures are present and supported."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Hệ số thanh toán hiện hành năm 2025 là {{FPT.current_ratio.2025}}, phản ánh nền tảng tài chính vững chắc và khả năng quản trị dòng tiền hiệu quả.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The current ratio of 1.40x and associated commentary are supported by the passage."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Tập đoàn đã thực hiện chi trả cổ tức với giá trị {{FPT.dividends_paid.2025}} trong năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "All bracketed figures are present and supported."
+      },
+      {
+        "section": "risk",
+        "text": "Vay và nợ thuê tài chính tăng {{FPT.debt_g.2025}} trong năm 2025, đưa tỷ lệ vay trên vốn chủ sở hữu lên mức {{FPT.debt_to_equity.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "All bracketed figures are present and supported."
+      },
+      {
+        "section": "risk",
+        "text": "Tập đoàn đối mặt với rủi ro chiến lược nếu xác định sai hướng phát triển công nghệ hoặc không đáp ứng được sự thay đổi nhanh chóng của AI.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Strategic risks concerning AI and wrong development direction are detailed in the passage."
+      },
+      {
+        "section": "risk",
+        "text": "Rủi ro tài chính bao gồm biến động tỷ giá tại các thị trường trọng điểm như Nhật Bản và rủi ro nợ xấu phát sinh từ hoạt động kinh doanh.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Financial risks including exchange rate fluctuations in Japan and overdue debt are described in the passage."
+      },
+      {
+        "section": "forecast",
+        "text": "Doanh thu dự báo cho năm 2026 đạt điểm giữa là {{FPT.forecast_revenue_mid.2026}}, với khoảng dao động từ {{FPT.forecast_revenue_lo.2026}} đến {{FPT.forecast_revenue_hi.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "All bracketed figures are present and supported."
+      },
+      {
+        "section": "forecast",
+        "text": "Mô hình dự báo dựa trên đóng góp từ tăng trưởng tổng tài sản là {{FPT.driver_assets_g.2026}} và tăng trưởng hàng tồn kho là {{FPT.driver_inv_g.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "All bracketed figures are present and supported."
+      },
+      {
+        "section": "forecast",
+        "text": "Kế hoạch doanh thu năm 2026 của tập đoàn là 58.580 tỷ đồng, trong bối cảnh không còn hợp nhất doanh thu từ FPT Telecom.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The 2026 revenue plan and FPT Telecom equity method consolidation note are supported by the passage."
+      },
+      {
+        "section": "forecast",
+        "text": "Động lực tăng trưởng dài hạn được kỳ vọng đến từ việc làm chủ các công nghệ chiến lược như AI, bán dẫn và hệ sinh thái Made by FPT.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Long-term growth drivers like AI, semiconductors, and Made by FPT are supported by the passages."
+      }
+    ],
+    "fpt-en": [
+      {
+        "section": "summary",
+        "text": "FPT's revenue grew from {{FPT.revenue.2022}} in 2022 to {{FPT.revenue.2025}} in 2025, representing a CAGR of {{FPT.revenue_cagr.2022_2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "summary",
+        "text": "Net income also increased from {{FPT.net_income.2022}} in 2022 to {{FPT.net_income.2025}} in 2025, with a CAGR of {{FPT.net_income_cagr.2022_2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "summary",
+        "text": "The company maintained double-digit growth in 2025 despite global economic uncertainties.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages state that FPT maintained double-digit growth in 2025 despite economic uncertainties."
+      },
+      {
+        "section": "revenue",
+        "text": "In 2025, FPT's revenue reached {{FPT.revenue.2025}}, which is a growth of {{FPT.rev_g.2025}} compared to 2024.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "revenue",
+        "text": "The Technology sector continues to be the main growth driver, contributing 63,4% of total revenue, equivalent to 44.475 billion VND, in 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages confirm the Technology sector contributed 63.4% of total revenue and 44,475 billion VND in 2025."
+      },
+      {
+        "section": "revenue",
+        "text": "Specifically, IT services for foreign markets grew by 14,3% in 2025, with newly signed revenue exceeding 1,5 billion USD.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages state that IT services for foreign markets grew by 14.3% and newly signed revenue exceeded 1.5 billion USD."
+      },
+      {
+        "section": "revenue",
+        "text": "In 2024, domestic IT services and the Made by FPT ecosystem also recorded growth of 13,9% and 31,0% respectively.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages show domestic IT services grew by 13.9% and Made by FPT ecosystem by 31.0% in 2024."
+      },
+      {
+        "section": "profitability",
+        "text": "FPT's gross profit margin was {{FPT.gross_margin.2025}} in 2025, placing it in the {{FPT.gross_margin_sector_pct.2025}} of its sector.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "profitability",
+        "text": "Net profit margin was {{FPT.net_margin.2025}} in 2025 compared to {{FPT.net_margin.2022}} in 2022, reflecting better operational efficiency and cost control.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages confirm the net profit margin was 16.0% in 2025 and reflects operational efficiency and cost control."
+      },
+      {
+        "section": "profitability",
+        "text": "ROE was {{FPT.roe.2025}} in 2025, which is in the {{FPT.roe_sector_pct.2025}} of the sector.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Cash flow from operations (CFO) was {{FPT.cfo.2025}} in 2025, down from {{FPT.cfo.2024}} in 2024.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Free cash flow (FCF) was {{FPT.fcf.2025}} in 2025, representing an FCF margin of {{FPT.fcf_margin.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "cash_flow",
+        "text": "FPT paid dividends of {{FPT.dividends_paid.2025}} in 2025, up from {{FPT.dividends_paid.2024}} in 2024.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "risk",
+        "text": "Borrowings rose {{FPT.debt_g.2025}} during the year; debt stands at {{FPT.debt_to_equity.2025}} of equity.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "risk",
+        "text": "FPT faces financial risks such as exchange rate fluctuations in key markets, bad debts, and high inventory.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages list financial risks including exchange rate fluctuations, bad debts, and high inventory."
+      },
+      {
+        "section": "risk",
+        "text": "Additionally, strategic risks include potential misdirection in technology investments and intense competition from foreign and domestic players.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages list strategic risks regarding misdirection in technology investments and intense competition."
+      },
+      {
+        "section": "risk",
+        "text": "The company's receivables growth exceeded revenue growth by {{FPT.recv_minus_rev_g.2025}} in 2025, with days sales outstanding (DSO) increasing by {{FPT.dso_chg.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "For 2026, the model forecasts a baseline revenue of {{FPT.forecast_revenue_mid.2026}} (representing a growth of {{FPT.forecast_growth_mid.2026}}), with a lower bound of {{FPT.forecast_revenue_lo.2026}} (at a growth rate of {{FPT.forecast_growth_lo.2026}}) and an upper bound of {{FPT.forecast_revenue_hi.2026}} at an {{FPT.forecast_interval_coverage.2026}} coverage.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "This forecast is driven by total asset growth contributing {{FPT.driver_assets_g.2026}} and inventory growth contributing {{FPT.driver_inv_g.2026}}, offset by asset turnover contributing {{FPT.driver_asset_turnover.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim solely contains bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "In comparison, FPT's own plan for 2026 targets a revenue of 58.580 billion VND, representing a 15,8% growth compared to the adjusted 2025 baseline of {{FPT.forecast_base.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages confirm the 2026 revenue target of 58,580 billion VND, 15.8% growth, and the 2025 adjusted baseline."
+      },
+      {
+        "section": "forecast",
+        "text": "The company's 2026 strategy focuses on investing in and commercializing strategic technologies like AI, quantum technology, and cybersecurity.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passages state that the company focuses on investing in and commercializing AI, quantum technology, and cybersecurity."
+      }
+    ],
+    "hpg-vi": [
+      {
+        "section": "summary",
+        "text": "Doanh thu thuần của HPG tăng từ {{HPG.revenue.2023}} năm 2023 lên {{HPG.revenue.2024}} năm 2024 và đạt {{HPG.revenue.2025}} năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "summary",
+        "text": "Lợi nhuận sau thuế của doanh nghiệp cũng ghi nhận sự tăng trưởng, từ {{HPG.net_income.2023}} năm 2023 lên {{HPG.net_income.2024}} năm 2024 và đạt {{HPG.net_income.2025}} năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "summary",
+        "text": "Tỷ suất sinh lời trên vốn chủ sở hữu (ROE) cải thiện qua các năm, lần lượt ở mức {{HPG.roe.2023}} năm 2023, {{HPG.roe.2024}} năm 2024 và {{HPG.roe.2025}} năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "revenue",
+        "text": "Tăng trưởng doanh thu của HPG phục hồi từ mức {{HPG.rev_g.2023}} năm 2023 lên {{HPG.rev_g.2024}} năm 2024 và đạt {{HPG.rev_g.2025}} năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "revenue",
+        "text": "Tốc độ tăng trưởng doanh thu năm 2025 của doanh nghiệp đạt {{HPG.rev_g.2025}}, vượt trội so với mức trung vị ngành là {{HPG.rev_g_sector_median.2025}}, đưa HPG vào {{HPG.rev_g_sector_pct.2025}} của ngành.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "revenue",
+        "text": "Tốc độ tăng trưởng kép hàng năm (CAGR) của doanh thu trong giai đoạn 2023–2025 đạt {{HPG.revenue_cagr.2023_2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "profitability",
+        "text": "Biên lợi nhuận gộp của HPG liên tục cải thiện từ {{HPG.gross_margin.2023}} năm 2023 lên {{HPG.gross_margin.2024}} năm 2024 và đạt {{HPG.gross_margin.2025}} năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "profitability",
+        "text": "Biên lợi nhuận ròng cũng tăng từ {{HPG.net_margin.2023}} năm 2023 lên {{HPG.net_margin.2024}} năm 2024 và đạt {{HPG.net_margin.2025}} năm 2025, nằm ở {{HPG.net_margin_sector_pct.2025}} so với trung vị ngành là {{HPG.net_margin_sector_median.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "profitability",
+        "text": "Hiệu quả sử dụng tài sản (ROA) tăng từ {{HPG.roa.2023}} năm 2023 lên {{HPG.roa.2024}} năm 2024 và đạt {{HPG.roa.2025}} năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Dòng tiền từ hoạt động kinh doanh (CFO) của HPG đạt {{HPG.cfo.2023}} năm 2023, sau đó ở mức {{HPG.cfo.2024}} năm 2024 và đạt {{HPG.cfo.2025}} năm 2025.",
+        "kept": false,
+        "support": "none_needed",
+        "problems": [
+          "unknown metric HPG.cfo.2025"
+        ],
+        "reason": ""
+      },
+      {
+        "section": "cash_flow",
+        "text": "Do chi mua sắm tài sản cố định (CAPEX) ở mức cao, lần lượt là {{HPG.capex.2023}} năm 2023 và {{HPG.capex.2024}} năm 2024, dòng tiền tự do (FCF) của công ty bị âm ở mức {{HPG.fcf.2023}} và {{HPG.fcf.2024}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Tỷ lệ dòng tiền kinh doanh trên lợi nhuận sau thuế biến động từ {{HPG.cfo_to_net_income.2023}} năm 2023 xuống {{HPG.cfo_to_net_income.2024}} năm 2024.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "risk",
+        "text": "Doanh nghiệp đối mặt với rủi rỏ khi phải thu khách hàng tăng nhanh hơn doanh thu ở mức {{HPG.recv_minus_rev_g.2025}}, đi kèm với số ngày phải thu thay đổi {{HPG.dso_chg.2025}} trong năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "risk",
+        "text": "Hệ số nợ phải trả trên tổng tài sản tăng từ {{HPG.liab_to_assets.2023}} năm 2023 lên {{HPG.liab_to_assets.2024}} năm 2024 và ở mức {{HPG.liab_to_assets.2025}} năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "risk",
+        "text": "Tỷ lệ vay trên vốn chủ sở hữu của doanh nghiệp ở mức {{HPG.debt_to_equity.2023}} năm 2023, {{HPG.debt_to_equity.2024}} năm 2024 và {{HPG.debt_to_equity.2025}} năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "Dự báo doanh thu năm 2026 của HPG có điểm giữa là {{HPG.forecast_revenue_mid.2026}}, tương ứng với mức tăng trưởng {{HPG.forecast_growth_mid.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "Khoảng dự báo doanh thu năm 2026 dao động từ cận dưới {{HPG.forecast_revenue_lo.2026}} (tăng trưởng {{HPG.forecast_growth_lo.2026}}) đến cận trên {{HPG.forecast_revenue_hi.2026}} (tăng trưởng {{HPG.forecast_growth_hi.2026}}), với mức phủ của khoảng dự báo đạt {{HPG.forecast_interval_coverage.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "Động lực chính đóng góp vào dự báo tăng trưởng doanh thu năm 2026 bao gồm tăng trưởng nợ phải trả ở mức {{HPG.driver_liab_g.2026}}, tăng trưởng hàng tồn kho ở mức {{HPG.driver_inv_g.2026}}, và tăng trưởng tổng tài sản ở mức {{HPG.driver_assets_g.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      }
+    ],
+    "mwg-en": [
+      {
+        "section": "summary",
+        "text": "MWG's revenue was at {{MWG.revenue.2022}} in 2022 and reached {{MWG.revenue.2025}} by 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "summary",
+        "text": "Net income was at {{MWG.net_income.2023}} in 2023 and reached {{MWG.net_income.2025}} in 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "revenue",
+        "text": "Revenue was at {{MWG.revenue.2023}} in 2023, with revenue growth at {{MWG.rev_g.2023}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "revenue",
+        "text": "By 2025, revenue reached {{MWG.revenue.2025}}, with growth at {{MWG.rev_g_sector_pct.2025}} of the sector.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "revenue",
+        "text": "The revenue CAGR for the 2022-2025 period is {{MWG.revenue_cagr.2022_2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "profitability",
+        "text": "Gross margin was at {{MWG.gross_margin.2023}} in 2023 and reached {{MWG.gross_margin.2025}} in 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "profitability",
+        "text": "Net margin reached {{MWG.net_margin.2025}} in 2025, which is at {{MWG.net_margin_sector_pct.2025}} of the sector.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "profitability",
+        "text": "ROE for 2025 is at {{MWG.roe.2025}}, placing the company at {{MWG.roe_sector_pct.2025}} in its sector.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Cash flow from operations was at {{MWG.cfo.2023}} in 2023 and reached {{MWG.cfo.2024}} in 2024.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Free cash flow margin was at {{MWG.fcf_margin.2024}} in 2024 and at {{MWG.fcf_margin.2025}} in 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Dividends paid were at {{MWG.dividends_paid.2024}} in 2024 and reached {{MWG.dividends_paid.2025}} in 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "risk",
+        "text": "The M-Score of {{MWG.m_score.2025}} is among the highest in the sector at {{MWG.m_pct_in_sector.2025}}, suggesting earnings quality deserves a closer look.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "risk",
+        "text": "The debt to equity ratio is at {{MWG.debt_to_equity.2025}}, which is at {{MWG.debt_to_equity_sector_pct.2025}} of the sector.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "risk",
+        "text": "Accruals as a percentage of total assets are at {{MWG.accruals.2025}}, placing the company at {{MWG.accruals_pct_in_sector.2025}} in its sector.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "The revenue forecast for 2026 is {{MWG.forecast_revenue_mid.2026}}, with a lower bound of {{MWG.forecast_revenue_lo.2026}} and an upper bound of {{MWG.forecast_revenue_hi.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "This forecast has a coverage of {{MWG.forecast_interval_coverage.2026}} and is driven by inventory growth at {{MWG.driver_inv_g.2026}} and growth in liabilities at {{MWG.driver_liab_g.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      },
+      {
+        "section": "forecast",
+        "text": "Other drivers include total asset growth at {{MWG.driver_assets_g.2026}} and asset turnover at {{MWG.driver_asset_turnover.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The claim only restates bracketed figures."
+      }
+    ],
+    "fpt-elc": [
+      {
+        "section": "summary",
+        "text": "FPT duy trì quy mô lớn với doanh thu tăng từ {{FPT.revenue.2023}} lên {{FPT.revenue.2025}} trong giai đoạn 2023–2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures and their direction correctly with no passages needed."
+      },
+      {
+        "section": "summary",
+        "text": "ELC có sự biến động mạnh về quy mô khi doanh thu năm 2025 đạt {{ELC.revenue.2025}} sau khi ở mức {{ELC.revenue.2024}} vào năm trước.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures and their direction correctly with no passages needed."
+      },
+      {
+        "section": "summary",
+        "text": "Tốc độ tăng trưởng lợi nhuận sau thuế bình quân (CAGR) của FPT đạt {{FPT.net_income_cagr.2023_2025}}, trong khi ELC ghi nhận mức {{ELC.net_income_cagr.2023_2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "revenue",
+        "text": "Doanh thu thuần của FPT năm 2024 tăng trưởng {{FPT.rev_g.2024}} và tiếp tục tăng {{FPT.rev_g.2025}} vào năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "revenue",
+        "text": "Động lực tăng trưởng chính của FPT là dịch vụ CNTT cho thị trường nước ngoài với doanh thu đạt 35.382 tỷ đồng năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passage confirms that the IT services for the overseas market is the main growth driver and states the revenue of 35.382 billion dong in 2025."
+      },
+      {
+        "section": "revenue",
+        "text": "ELC ghi nhận mức tăng trưởng doanh thu đột biến {{ELC.rev_g.2025}} vào năm 2025, nằm ở {{ELC.rev_g_sector_pct.2025}} của ngành.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "revenue",
+        "text": "Trong năm 2024, mảng dịch vụ CNTT trong nước của FPT đạt doanh thu 8.157 tỷ đồng nhờ nhu cầu hồi phục từ khối ngân hàng và doanh nghiệp.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passage confirms the revenue of 8.157 billion dong and the recovery drivers from banks and enterprises in 2024."
+      },
+      {
+        "section": "profitability",
+        "text": "Biên lợi nhuận gộp năm 2025 của FPT là {{FPT.gross_margin.2025}}, cao hơn so với mức {{ELC.gross_margin.2025}} của ELC.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "profitability",
+        "text": "Chỉ số ROE của FPT năm 2025 đạt {{FPT.roe.2025}}, đứng ở {{FPT.roe_sector_pct.2025}} trong ngành công nghệ thông tin.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "profitability",
+        "text": "ELC có tỷ suất lợi nhuận ròng năm 2025 là {{ELC.net_margin.2025}} và ROE đạt {{ELC.roe.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Dòng tiền từ hoạt động kinh doanh của FPT năm 2025 là {{FPT.cfo.2025}}, trong khi ELC ở mức {{ELC.cfo.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "cash_flow",
+        "text": "FPT đã thực hiện chi trả cổ tức {{FPT.dividends_paid.2025}} trong năm 2025, so với mức {{ELC.dividends_paid.2025}} của ELC.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "cash_flow",
+        "text": "Dòng tiền tự do của ELC năm 2025 ở mức {{ELC.fcf.2025}}, phản ánh áp lực chi đầu tư tài sản cố định là {{ELC.capex.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "risk",
+        "text": "FPT đối mặt với rủi ro khi vay và nợ thuê tài chính tăng {{FPT.debt_g.2025}} trong năm 2025, với hệ số vay trên vốn chủ sở hữu là {{FPT.debt_to_equity.2025}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "risk",
+        "text": "Tập đoàn FPT cũng lưu ý các rủi ro chiến lược về sự thay đổi công nghệ do AI và áp lực cạnh tranh từ các đối thủ nước ngoài.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passage mentions strategic risks regarding AI development and competitive pressure from foreign or domestic companies."
+      },
+      {
+        "section": "risk",
+        "text": "ELC có rủi ro khi lợi nhuận vượt dòng tiền kinh doanh với dồn tích là {{ELC.accruals.2025}} tổng tài sản, cao hơn {{ELC.accruals_pct_in_sector.2025}} các doanh nghiệp cùng ngành.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "risk",
+        "text": "Dòng tiền kinh doanh của ELC chỉ bằng {{ELC.cfo_to_net_income.2025}} lợi nhuận sau thuế và nợ vay tăng {{ELC.debt_g.2025}} trong năm 2025.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "risk",
+        "text": "FPT còn chịu rủi ro tài chính từ biến động tỷ giá tại các thị trường trọng điểm và rủi ro nợ xấu phát sinh trong kinh doanh.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passage confirms financial risks related to exchange rate fluctuations and bad debt/inventory controls."
+      },
+      {
+        "section": "forecast",
+        "text": "Dự báo doanh thu điểm giữa năm 2026 của FPT là {{FPT.forecast_revenue_mid.2026}} với mức tăng trưởng {{FPT.forecast_growth_mid.2026}}, được thúc đẩy bởi tăng trưởng tổng tài sản {{FPT.driver_assets_g.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "forecast",
+        "text": "FPT đặt kế hoạch doanh thu năm 2026 đạt 58.580 tỷ đồng và lợi nhuận trước thuế 11.629 tỷ đồng sau khi điều chỉnh phương pháp hợp nhất FPT Telecom.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "The passage lists the 2026 revenue plan as 58.580 billion dong and pre-tax profit as 11.629 billion dong, and explains the consolidation method adjustment."
+      },
+      {
+        "section": "forecast",
+        "text": "Đối với ELC, doanh thu dự báo năm 2026 là {{ELC.forecast_revenue_mid.2026}} với đóng góp chính từ tăng trưởng hàng tồn kho là {{ELC.driver_inv_g.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      },
+      {
+        "section": "forecast",
+        "text": "Khoảng dự báo doanh thu năm 2026 của FPT có mức phủ {{FPT.forecast_interval_coverage.2026}} với độ lệch so với mặt bằng chung là {{FPT.forecast_rel.2026}}.",
+        "kept": true,
+        "support": "supported",
+        "problems": [],
+        "reason": "Claim restates bracketed figures correctly with no passages needed."
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+[server]
+# Streamlit's hot-reload watcher inspects every imported module. With transformers loaded that means
+# touching about a hundred lazily imported vision modules, each of which fails on the missing
+# torchvision and prints a traceback: about 2,000 log lines per run. The app does not need hot reload;
+# restart `streamlit run app.py` after editing code.
+fileWatcherType = "none"
+# Local tool: do not serve it to the rest of the network.
+address = "localhost"
+
+[browser]
+gatherUsageStats = false
