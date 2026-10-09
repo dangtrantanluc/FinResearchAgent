@@ -1,6 +1,7 @@
 """The two local models: a multilingual encoder and a cross-encoder reranker."""
 from __future__ import annotations
 
+import os
 from functools import lru_cache
 
 import numpy as np
@@ -12,9 +13,10 @@ MAX_TOKENS = 512
 
 
 def _device() -> str:
+    """FINRESEARCH_DEVICE=cpu keeps a batch job off the GPU while the app is using it."""
     import torch
 
-    return "cuda" if torch.cuda.is_available() else "cpu"
+    return os.environ.get("FINRESEARCH_DEVICE") or ("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def _to_device(module):

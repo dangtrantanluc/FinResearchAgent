@@ -14,16 +14,16 @@ from .metrics import MetricSet
 
 ROOT = Path(__file__).resolve().parents[2]
 
-# name -> (label, unit)
+# name -> ((Vietnamese label, English label), unit)
 SIGNALS = {
-    "m_score": ("Beneish M-Score", "score"),
-    "m_pct_in_sector": ("Vị trí M-Score trong ngành", "pctile"),
-    "accruals": ("Dồn tích / tổng tài sản", "pct"),
-    "accruals_pct_in_sector": ("Vị trí dồn tích trong ngành", "pctile"),
-    "recv_minus_rev_g": ("Tăng trưởng phải thu trừ tăng trưởng doanh thu", "pp"),
-    "dso_chg": ("Thay đổi số ngày phải thu", "days"),
-    "debt_g": ("Tăng trưởng vay", "pct"),
-    "debt_to_equity": ("Vay / vốn chủ sở hữu", "x"),
+    "m_score": (("Beneish M-Score", "Beneish M-Score"), "score"),
+    "m_pct_in_sector": (("Vị trí M-Score trong ngành", "M-Score position in sector"), "pctile"),
+    "accruals": (("Dồn tích / tổng tài sản", "Accruals / total assets"), "pct"),
+    "accruals_pct_in_sector": (("Vị trí dồn tích trong ngành", "Accruals position in sector"), "pctile"),
+    "recv_minus_rev_g": (("Tăng trưởng phải thu trừ tăng trưởng doanh thu", "Receivables growth minus revenue growth"), "pp"),
+    "dso_chg": (("Thay đổi số ngày phải thu", "Change in days sales outstanding"), "days"),
+    "debt_g": (("Tăng trưởng vay", "Growth in borrowings"), "pct"),
+    "debt_to_equity": (("Vay / vốn chủ sở hữu", "Debt / equity"), "x"),
 }
 
 
@@ -35,12 +35,13 @@ def get_risk_signals(ticker: str, year: int, lang: str = "vi") -> MetricSet:
     values = dict(zip(m.name, m.value))
     f = query("SELECT field, value FROM fundamentals WHERE ticker = %s AND year = %s AND field IN ('cfo', 'net_income')", (ticker, year))
     base = dict(zip(f.field, f.value))
-    src = f"Tính từ BCTC kiểm toán {year}"
+    src = f"Computed from audited statements {year}" if lang == "en" else f"Tính từ BCTC kiểm toán {year}"
     for name, (label, unit) in SIGNALS.items():
-        out.add(name, year, values.get(name), unit, label, src)
+        out.add(name, year, values.get(name), unit, label[lang == "en"], src)
     if base.get("net_income", 0) and base["net_income"] > 0 and base.get("cfo") is not None:
         values["cfo_to_net_income"] = base["cfo"] / base["net_income"]
-        out.add("cfo_to_net_income", year, values["cfo_to_net_income"], "x", "Dòng tiền kinh doanh / lợi nhuận sau thuế", src)
+        out.add("cfo_to_net_income", year, values["cfo_to_net_income"], "x",
+                "Operating cash flow / net profit" if lang == "en" else "Dòng tiền kinh doanh / lợi nhuận sau thuế", src)
 
     ref = lambda name: "{{" + f"{ticker}.{name}.{year}" + "}}"
     v = lambda name: values.get(name, np.nan)
@@ -95,8 +96,9 @@ def get_forecast_drivers(ticker: str, top: int = 5, lang: str = "vi") -> MetricS
         out.notes.append("Giải thích SHAP không khớp dự báo đã lưu; hãy nạp lại cơ sở dữ liệu sau khi train lại." if lang != "en" else
                          "The SHAP explanation does not match the stored forecast; reload the database after retraining.")
         return out
-    src = "TreeSHAP của mô hình tăng trưởng (artifacts/growth_model.json)"
-    out.add("forecast_rel", target, f.pred_rel.iloc[0], "pp", f"Dự báo {target}: lệch so với mặt bằng chung", src)
+    src = "TreeSHAP of the growth model (artifacts/growth_model.json)" if lang == "en" else "TreeSHAP của mô hình tăng trưởng (artifacts/growth_model.json)"
+    out.add("forecast_rel", target, f.pred_rel.iloc[0], "pp",
+            f"Forecast {target}: gap to the market median" if lang == "en" else f"Dự báo {target}: lệch so với mặt bằng chung", src)
     for i in np.argsort(-np.abs(contrib[:-1]))[:top]:
         name = features[i]
         labels, prefix = (FEATURE_LABELS_EN, "Contribution to the forecast") if lang == "en" else (FEATURE_LABELS, "Đóng góp vào dự báo")

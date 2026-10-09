@@ -83,7 +83,10 @@ def plan_queries(state: State) -> dict:
         docs = set(query("SELECT year FROM documents WHERE ticker = %s", (ticker,)).year)
         years = [y for y in (intent.end_year, intent.end_year - 1) if y in docs and y >= intent.start_year]
         if not years:
-            notes.append(f"Kho tài liệu không có báo cáo thường niên của {ticker} cho giai đoạn này, nên báo cáo không có nhận định định tính về {ticker}.")
+            notes.append(
+                f"The document store has no annual report of {ticker} for this period, so this note makes no qualitative statement about {ticker}."
+                if intent.language == "en" else
+                f"Kho tài liệu không có báo cáo thường niên của {ticker} cho giai đoạn này, nên báo cáo không có nhận định định tính về {ticker}.")
             continue
         for topic, templates in QUERY_TEMPLATES.items():
             for template in templates:

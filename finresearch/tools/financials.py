@@ -13,51 +13,53 @@ import numpy as np
 import pandas as pd
 
 from ..db import query
-from ..panel import FEATURE_LABELS
+from ..panel import FEATURE_LABELS, FEATURE_LABELS_EN
 from .metrics import MetricSet
 
-# field -> label
+# field -> (Vietnamese label, English label)
 AMOUNTS = {
-    "revenue": "Doanh thu thuần",
-    "gross_profit": "Lợi nhuận gộp",
-    "op_profit": "Lợi nhuận thuần từ hoạt động kinh doanh",
-    "pbt": "Lợi nhuận trước thuế",
-    "net_income": "Lợi nhuận sau thuế",
-    "total_assets": "Tổng tài sản",
-    "liabilities": "Nợ phải trả",
-    "equity": "Vốn chủ sở hữu",
-    "cash": "Tiền và tương đương tiền",
-    "trade_receivables": "Phải thu khách hàng",
-    "inventory": "Hàng tồn kho",
-    "debt": "Vay và nợ thuê tài chính",
-    "cfo": "Dòng tiền từ hoạt động kinh doanh",
-    "capex": "Chi mua sắm tài sản cố định",
-    "fcf": "Dòng tiền tự do",
-    "dividends_paid": "Cổ tức đã trả",
+    "revenue": ("Doanh thu thuần", "Net revenue"),
+    "gross_profit": ("Lợi nhuận gộp", "Gross profit"),
+    "op_profit": ("Lợi nhuận thuần từ hoạt động kinh doanh", "Operating profit"),
+    "pbt": ("Lợi nhuận trước thuế", "Profit before tax"),
+    "net_income": ("Lợi nhuận sau thuế", "Net profit"),
+    "total_assets": ("Tổng tài sản", "Total assets"),
+    "liabilities": ("Nợ phải trả", "Total liabilities"),
+    "equity": ("Vốn chủ sở hữu", "Equity"),
+    "cash": ("Tiền và tương đương tiền", "Cash and cash equivalents"),
+    "trade_receivables": ("Phải thu khách hàng", "Trade receivables"),
+    "inventory": ("Hàng tồn kho", "Inventory"),
+    "debt": ("Vay và nợ thuê tài chính", "Borrowings"),
+    "cfo": ("Dòng tiền từ hoạt động kinh doanh", "Operating cash flow"),
+    "capex": ("Chi mua sắm tài sản cố định", "Capital expenditure"),
+    "fcf": ("Dòng tiền tự do", "Free cash flow"),
+    # cash flow line 36 covers every owner, so it exceeds the dividend the parent declares to its own shareholders
+    "dividends_paid": ("Cổ tức, lợi nhuận đã trả (gồm cả cho cổ đông không kiểm soát của công ty con)",
+                       "Dividends and profits paid (including to minority shareholders of subsidiaries)"),
 }
 
-# name -> (label, unit)
+# name -> ((Vietnamese label, English label), unit)
 RATIOS = {
-    "rev_g": ("Tăng trưởng doanh thu", "pct"),
-    "net_income_g": ("Tăng trưởng lợi nhuận sau thuế", "pct"),
-    "gross_margin": ("Biên lợi nhuận gộp", "pct"),
-    "op_margin": ("Biên lợi nhuận hoạt động", "pct"),
-    "net_margin": ("Biên lợi nhuận ròng", "pct"),
-    "roe": ("ROE", "pct"),
-    "roa": ("ROA", "pct"),
-    "liab_to_assets": ("Nợ phải trả / tổng tài sản", "pct"),
-    "debt_to_equity": ("Vay / vốn chủ sở hữu", "x"),
-    "current_ratio": ("Hệ số thanh toán hiện hành", "x"),
-    "asset_turnover": ("Vòng quay tài sản", "x"),
-    "dso": ("Số ngày phải thu", "days"),
-    "dio": ("Số ngày tồn kho", "days"),
-    "cfo_to_net_income": ("Dòng tiền kinh doanh / lợi nhuận sau thuế", "x"),
-    "fcf_margin": ("Dòng tiền tự do / doanh thu", "pct"),
-    "accruals": ("Dồn tích / tổng tài sản", "pct"),
-    "m_score": ("Beneish M-Score", "score"),
+    "rev_g": (("Tăng trưởng doanh thu", "Revenue growth"), "pct"),
+    "net_income_g": (("Tăng trưởng lợi nhuận sau thuế", "Net profit growth"), "pct"),
+    "gross_margin": (("Biên lợi nhuận gộp", "Gross margin"), "pct"),
+    "op_margin": (("Biên lợi nhuận hoạt động", "Operating margin"), "pct"),
+    "net_margin": (("Biên lợi nhuận ròng", "Net margin"), "pct"),
+    "roe": (("ROE", "ROE"), "pct"),
+    "roa": (("ROA", "ROA"), "pct"),
+    "liab_to_assets": (("Nợ phải trả / tổng tài sản", "Liabilities / total assets"), "pct"),
+    "debt_to_equity": (("Vay / vốn chủ sở hữu", "Debt / equity"), "x"),
+    "current_ratio": (("Hệ số thanh toán hiện hành", "Current ratio"), "x"),
+    "asset_turnover": (("Vòng quay tài sản", "Asset turnover"), "x"),
+    "dso": (("Số ngày phải thu", "Days sales outstanding"), "days"),
+    "dio": (("Số ngày tồn kho", "Days inventory outstanding"), "days"),
+    "cfo_to_net_income": (("Dòng tiền kinh doanh / lợi nhuận sau thuế", "Operating cash flow / net profit"), "x"),
+    "fcf_margin": (("Dòng tiền tự do / doanh thu", "Free cash flow / revenue"), "pct"),
+    "accruals": (("Dồn tích / tổng tài sản", "Accruals / total assets"), "pct"),
+    "m_score": (("Beneish M-Score", "Beneish M-Score"), "score"),
 }
 PEER_DEFAULT = ("rev_g", "gross_margin", "net_margin", "roe", "debt_to_equity", "dso", "accruals", "m_score")
-SCOPE_LABEL = {"consolidated": "hợp nhất", "parent": "công ty mẹ", "single": "riêng lẻ"}
+SCOPE_LABEL = {"consolidated": ("hợp nhất", "consolidated"), "parent": ("công ty mẹ", "parent company"), "single": ("riêng lẻ", "separate")}
 
 
 NO_HISTORY_EN = {"thiếu lịch sử": "no history"}
@@ -87,8 +89,9 @@ def _reports(ticker: str, start_year: int, end_year: int) -> pd.DataFrame:
     return r
 
 
-def _source(year: int, scope: str) -> str:
-    return f"BCTC kiểm toán {year} ({SCOPE_LABEL.get(scope, scope)})"
+def _source(year: int, scope: str, lang: str = "vi") -> str:
+    kind = SCOPE_LABEL.get(scope, (scope, scope))[lang == "en"]
+    return f"Audited statements {year} ({kind})" if lang == "en" else f"BCTC kiểm toán {year} ({kind})"
 
 
 def _fundamentals(ticker: str, start_year: int, end_year: int) -> pd.DataFrame:
@@ -119,7 +122,7 @@ def get_financials(ticker: str, start_year: int, end_year: int, lang: str = "vi"
         if year not in w.index:
             continue
         for field, label in AMOUNTS.items():
-            out.add(field, year, w.at[year, field], "vnd", label, _source(year, scope))
+            out.add(field, year, w.at[year, field], "vnd", label[lang == "en"], _source(year, scope, lang))
     missing = sorted(set(range(start_year, end_year + 1)) - set(reports.year))
     if missing:
         years = ", ".join(map(str, missing))
@@ -151,16 +154,18 @@ def get_ratios(ticker: str, start_year: int, end_year: int, lang: str = "vi") ->
     for year in sorted(table.index):
         for name, (label, unit) in RATIOS.items():
             if name in table:
-                out.add(name, year, table.at[year, name], unit, label, f"Tính từ {_source(year, scope.get(year, ''))}")
+                src = _source(year, scope.get(year, ""), lang)
+                out.add(name, year, table.at[year, name], unit, label[lang == "en"], _t(lang, f"Tính từ {src}", f"Computed from {src}"))
 
     years = [y for y in sorted(w.index) if pd.notna(w.at[y, "revenue"])] if len(w) else []
     if len(years) >= 2:
         first, last = years[0], years[-1]
-        period, src = f"{first}_{last}", f"Tính từ BCTC kiểm toán {first} và {last}"
+        period = f"{first}_{last}"
+        src = _t(lang, f"Tính từ BCTC kiểm toán {first} và {last}", f"Computed from audited statements {first} and {last}")
         out.add("revenue_cagr", period, _cagr(w.at[first, "revenue"], w.at[last, "revenue"], last - first), "pct",
-                f"CAGR doanh thu {first}–{last}", src)
+                _t(lang, f"CAGR doanh thu {first}–{last}", f"Revenue CAGR {first}–{last}"), src)
         out.add("net_income_cagr", period, _cagr(w.at[first, "net_income"], w.at[last, "net_income"], last - first), "pct",
-                f"CAGR lợi nhuận sau thuế {first}–{last}", src)
+                _t(lang, f"CAGR lợi nhuận sau thuế {first}–{last}", f"Net profit CAGR {first}–{last}"), src)
     return out
 
 
@@ -181,14 +186,17 @@ def get_peer_stats(ticker: str, year: int, names: tuple[str, ...] = PEER_DEFAULT
         (sector, year, list(names)),
     )
     for name in names:
-        label, unit = RATIOS.get(name, (FEATURE_LABELS.get(name, name), "x"))
+        labels, unit = RATIOS.get(name, ((FEATURE_LABELS.get(name, name), FEATURE_LABELS_EN.get(name, name)), "x"))
+        label = labels[lang == "en"]
         group = peers[peers.name == name]
         own = group[group.ticker == ticker]
         if own.empty or len(group) < 5:
             continue
-        src = f"{len(group)} công ty ngành {sector} có BCTC kiểm toán {year}"
-        out.add(f"{name}_sector_median", year, group.value.median(), unit, f"{label}: trung vị ngành", src)
-        out.add(f"{name}_sector_pct", year, (group.value <= own.value.iloc[0]).mean(), "pctile", f"{label}: vị trí trong ngành", src)
+        src = _t(lang, f"{len(group)} công ty ngành {sector} có BCTC kiểm toán {year}",
+                 f"{len(group)} companies in the sector {sector} with audited statements for {year}")
+        out.add(f"{name}_sector_median", year, group.value.median(), unit, label + _t(lang, ": trung vị ngành", ": sector median"), src)
+        out.add(f"{name}_sector_pct", year, (group.value <= own.value.iloc[0]).mean(), "pctile",
+                label + _t(lang, ": vị trí trong ngành", ": position in sector"), src)
     n = peers.ticker.nunique()
     out.notes.append(_t(lang, f"So sánh với ngành {sector} ({n} công ty, năm {year})",
                         f"Peer comparison uses the ICB sector {sector} ({n} companies, {year})"))
@@ -207,7 +215,8 @@ def get_forecast(ticker: str, lang: str = "vi") -> MetricSet:
     r = f.iloc[0]
     target, base_year = int(r.target_year), int(r.target_year) - 1
     base = _fundamentals(ticker, base_year, base_year).at[base_year, "revenue"]
-    src = "Mô hình XGBoost trên BCTC kiểm toán 2015–2025; khoảng dự báo conformal 80%"
+    src = _t(lang, "Mô hình XGBoost trên BCTC kiểm toán 2015–2025; khoảng dự báo conformal",
+             "XGBoost model on audited statements 2015–2025; conformal prediction interval")
 
     changes = query("SELECT * FROM scope_changes WHERE ticker = %s AND effective_year = %s", (ticker, target))
     for c in changes.itertuples():
@@ -216,9 +225,11 @@ def get_forecast(ticker: str, lang: str = "vi") -> MetricSet:
             part = _fundamentals(c.counterpart, base_year, base_year)
             if len(part) and pd.notna(part.at[base_year, "revenue"]):
                 removed = part.at[base_year, "revenue"]
-                out.add("forecast_base_reported", base_year, base, "vnd", f"Doanh thu {base_year} theo báo cáo", _source(base_year, "consolidated"))
-                out.add("forecast_base_removed", base_year, removed, "vnd", f"Doanh thu {base_year} của {c.counterpart}",
-                        f"BCTC kiểm toán {base_year} của {c.counterpart}")
+                out.add("forecast_base_reported", base_year, base, "vnd",
+                        _t(lang, f"Doanh thu {base_year} theo báo cáo", f"{base_year} revenue as reported"), _source(base_year, "consolidated", lang))
+                out.add("forecast_base_removed", base_year, removed, "vnd",
+                        _t(lang, f"Doanh thu {base_year} của {c.counterpart}", f"{base_year} revenue of {c.counterpart}"),
+                        _t(lang, f"BCTC kiểm toán {base_year} của {c.counterpart}", f"Audited statements {base_year} of {c.counterpart}"))
                 base = base - removed
                 out.notes.append(_t(
                     lang,
@@ -231,12 +242,17 @@ def get_forecast(ticker: str, lang: str = "vi") -> MetricSet:
                 out.notes.append(_t(lang, f"Không có doanh thu {base_year} của {c.counterpart} để điều chỉnh; dự báo vẫn theo phạm vi hợp nhất cũ.",
                                     f"{c.counterpart}'s {base_year} revenue is not available, so the forecast keeps the old consolidation scope."))
 
-    out.add("forecast_base", base_year, base, "vnd", f"Doanh thu cơ sở {base_year} cho dự báo", "Tính từ BCTC kiểm toán")
-    for key, label in (("lo", "cận dưới"), ("mid", "điểm giữa"), ("hi", "cận trên")):
+    out.add("forecast_base", base_year, base, "vnd",
+            _t(lang, f"Doanh thu cơ sở {base_year} cho dự báo", f"{base_year} revenue base for the forecast"),
+            _t(lang, "Tính từ BCTC kiểm toán", "Computed from audited statements"))
+    for key, vi, en in (("lo", "cận dưới", "lower bound"), ("mid", "điểm giữa", "midpoint"), ("hi", "cận trên", "upper bound")):
         g = r[f"growth_{key}"]
-        out.add(f"forecast_growth_{key}", target, g, "pct", f"Tăng trưởng doanh thu dự báo {target}: {label}", src)
-        out.add(f"forecast_revenue_{key}", target, base * (1 + g), "vnd", f"Doanh thu dự báo {target}: {label}", src)
-    out.add("forecast_interval_coverage", target, _interval_coverage(), "pct", f"Mức phủ của khoảng dự báo {target}", src)
+        out.add(f"forecast_growth_{key}", target, g, "pct",
+                _t(lang, f"Tăng trưởng doanh thu dự báo {target}: {vi}", f"Forecast revenue growth {target}: {en}"), src)
+        out.add(f"forecast_revenue_{key}", target, base * (1 + g), "vnd",
+                _t(lang, f"Doanh thu dự báo {target}: {vi}", f"Forecast revenue {target}: {en}"), src)
+    out.add("forecast_interval_coverage", target, _interval_coverage(), "pct",
+            _t(lang, f"Mức phủ của khoảng dự báo {target}", f"Coverage of the {target} forecast interval"), src)
     out.notes.append(_t(
         lang,
         f"Dự báo giả định mặt bằng chung tăng như trung vị lịch sử; nhóm biến động doanh thu của {ticker}: {r.vol_group}.",

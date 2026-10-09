@@ -136,6 +136,47 @@ def test_offline_run_answers_the_example_question():
 
 
 @needs_db
+def test_comparison_puts_both_companies_in_one_table():
+    from finresearch.agent.graph import run
+
+    final = run("So sánh FPT và ELC giai đoạn 2023–2025", llm=None, search_mode="lexical")
+    md = final["markdown"]
+    table = md[md.index("## So sánh nhanh"): md.index("## Tóm tắt")]
+    assert "| Chỉ tiêu | FPT | ELC |" in table
+    assert "| Doanh thu thuần 2025 | 70.113 tỷ đồng | 1.518 tỷ đồng |" in table
+    roe = next(l for l in table.splitlines() if l.startswith("| ROE 2025"))
+    assert "28,3% (phân vị 100)" in roe and roe.count("phân vị") == 2      # each firm ranked within its own sector
+    forecast = next(l for l in table.splitlines() if l.startswith("| Doanh thu dự báo 2026"))
+    assert "55.549 tỷ đồng (44.123 tỷ đồng – 69.932 tỷ đồng)" in forecast
+
+
+@needs_db
+def test_single_company_report_has_no_comparison_table():
+    from finresearch.agent.graph import run
+
+    assert "So sánh nhanh" not in run("Phân tích FPT 2024-2025", llm=None, search_mode="lexical")["markdown"]
+
+
+class DownLLM:
+    """Every model out of quota."""
+
+    calls: list = []
+
+    def generate(self, schema, system, prompt, tier="fast"):
+        raise RuntimeError("Gemini không trả lời được (model-a: 429)")
+
+
+@needs_db
+def test_a_model_outage_still_yields_a_report_and_says_so():
+    from finresearch.agent.graph import run
+
+    final = run("Phân tích FPT 2024-2025", llm=DownLLM(), search_mode="lexical")
+    assert final["stats"]["kept"] == final["stats"]["claims"] > 10
+    assert "70.113 tỷ đồng" in final["markdown"]
+    assert "Mô hình ngôn ngữ không trả lời" in final["markdown"] and "model-a: 429" in final["markdown"]
+
+
+@needs_db
 def test_unknown_ticker_stops_before_any_work():
     from finresearch.agent.graph import run
 

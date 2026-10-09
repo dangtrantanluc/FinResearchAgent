@@ -122,10 +122,14 @@ def validate(state: State, llm: LLM | None = None) -> dict:
         for n, c in enumerate(to_judge):
             passages = "\n".join(f"  [{e}] {evidence[e].text}" for e in c.claim.evidence_ids) or NO_PASSAGES
             blocks.append(f"CLAIM {n}: {for_judge(c.claim.text, state)}\nPASSAGES:\n{passages}")
-        verdicts = {v.index: v for v in llm.generate(Verdicts, JUDGE_SYSTEM, "\n\n".join(blocks), tier="fast").items}
+        try:
+            verdicts = {v.index: v for v in llm.generate(Verdicts, JUDGE_SYSTEM, "\n\n".join(blocks), tier="fast").items}
+            missing = "the judge returned no verdict for this claim"
+        except (RuntimeError, ValueError) as exc:  # no judge available: keep the claims, say they were not judged
+            verdicts, missing = {}, f"the judge model did not answer: {exc}"
         for n, c in enumerate(to_judge):
             v = verdicts.get(n)
-            c.support, c.reason = (v.verdict, v.reason) if v else ("unchecked", "the judge returned no verdict for this claim")
+            c.support, c.reason = (v.verdict, v.reason) if v else ("unchecked" if c.claim.evidence_ids else "none_needed", missing)
 
     cited = [c for c in checked if c.claim.evidence_ids and not c.problems]
     stats = {

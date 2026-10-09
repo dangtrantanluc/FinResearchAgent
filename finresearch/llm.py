@@ -32,8 +32,7 @@ class GeminiLLM:
 
     DEFAULTS = {"fast": "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-2.5-flash",
                 "strong": "gemini-3.5-flash,gemini-3-flash-preview,gemini-2.5-flash"}
-    ROUNDS = 2          # passes through the list before giving up
-    ROUND_WAIT = 8      # seconds between passes
+    ROUND_WAITS = (0, 8, 25)  # seconds before each pass through the list; a 503 usually clears within half a minute
     TIMEOUT_MS = 180_000
 
     def __init__(self, api_key: str | None = None):
@@ -65,9 +64,9 @@ class GeminiLLM:
         from google.genai import errors
 
         last: Exception | None = None
-        for attempt in range(self.ROUNDS):
-            if attempt:
-                time.sleep(self.ROUND_WAIT)
+        failures: dict[str, int] = {}
+        for wait in self.ROUND_WAITS:
+            time.sleep(wait)
             for model in self.models[tier]:
                 started = time.time()
                 record = {"model": model, "tier": tier, "schema": schema.__name__}
@@ -75,13 +74,15 @@ class GeminiLLM:
                     response = self._call(model, schema, system, prompt)
                 except errors.APIError as exc:
                     last = exc
+                    failures[model] = exc.code
                     self.calls.append({**record, "seconds": round(time.time() - started, 1), "error": f"{exc.code} {str(exc.message)[:120]}"})
                     continue
                 usage = response.usage_metadata
                 self.calls.append({**record, "seconds": round(time.time() - started, 1),
                                    "prompt_tokens": usage.prompt_token_count, "output_tokens": usage.candidates_token_count})
                 return response
-        raise RuntimeError(f"Gemini không trả lời được (đã thử {', '.join(self.models[tier])}): {last}") from last
+        tried = ", ".join(f"{m}: {code}" for m, code in failures.items())
+        raise RuntimeError(f"Gemini không trả lời được ({tried}). 429 = hết hạn mức, 503 = quá tải, 404 = model đã ngừng.") from last
 
     def generate(self, schema: type[T], system: str, prompt: str, tier: Tier = "fast") -> T:
         error = None

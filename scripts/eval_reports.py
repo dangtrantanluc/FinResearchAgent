@@ -1,8 +1,9 @@
 """Run a fixed set of questions through the full workflow and record what the validator did.
 
-    python scripts/eval_reports.py
+    python scripts/eval_reports.py [question id ...]
 
 Writes eval/report_results.json and one markdown report per question under eval/reports/.
+With ids, only those questions are run and the other rows of the results file are kept.
 Uses the configured language model; without a key it measures the offline mode.
 """
 import json
@@ -33,8 +34,14 @@ if __name__ == "__main__":
     graph = build_graph(llm)
     out_dir = ROOT / "eval/reports"
     out_dir.mkdir(parents=True, exist_ok=True)
-    rows, details = [], {}
+    results_path = ROOT / "eval/report_results.json"
+    only = sys.argv[1:]
+    previous = json.loads(results_path.read_text(encoding="utf-8")) if only and results_path.exists() else {"summary": [], "claims": {}}
+    rows = [r for r in previous["summary"] if r["id"] not in only]
+    details = {k: v for k, v in previous["claims"].items() if k not in only}
     for key, question in QUESTIONS.items():
+        if only and key not in only:
+            continue
         started = time.time()
         try:
             final = graph.invoke({"question": question})
@@ -48,8 +55,9 @@ if __name__ == "__main__":
                      "failed_calls": sum("error" in c for c in final.get("llm_calls", []))})
         details[key] = [{"section": c.section, "text": c.claim.text, "kept": c.kept, "support": c.support,
                          "problems": c.problems, "reason": c.reason} for c in final.get("checked", [])]
+    rows.sort(key=lambda r: list(QUESTIONS).index(r["id"]))
     table = pd.DataFrame(rows).set_index("id")
     print("mode:", "Gemini" if llm else "offline (no API key)")
     print(table.to_string())
-    (ROOT / "eval/report_results.json").write_text(
+    results_path.write_text(
         json.dumps({"mode": "llm" if llm else "offline", "summary": rows, "claims": details}, ensure_ascii=False, indent=2), encoding="utf-8")

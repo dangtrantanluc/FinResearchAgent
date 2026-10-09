@@ -7,10 +7,63 @@ from .schema import PLACEHOLDER, SECTION_TITLES, State
 EXCERPTS_PER_TOPIC = 2
 EXCERPT_CHARS = 320
 
+# Rows of the side-by-side table: (metric name, Vietnamese label, English label, show the sector percentile?)
+COMPARISON_ROWS = [
+    ("revenue", "Doanh thu thuần {e}", "Net revenue {e}", False),
+    ("revenue_cagr", "CAGR doanh thu {s}–{e}", "Revenue CAGR {s}–{e}", False),
+    ("rev_g", "Tăng trưởng doanh thu {e}", "Revenue growth {e}", True),
+    ("gross_margin", "Biên lợi nhuận gộp {e}", "Gross margin {e}", True),
+    ("net_margin", "Biên lợi nhuận ròng {e}", "Net margin {e}", True),
+    ("roe", "ROE {e}", "ROE {e}", True),
+    ("debt_to_equity", "Vay / vốn chủ sở hữu {e}", "Debt / equity {e}", True),
+    ("cfo_to_net_income", "Dòng tiền kinh doanh / LNST {e}", "Operating cash flow / net profit {e}", False),
+    ("fcf_margin", "Dòng tiền tự do / doanh thu {e}", "Free cash flow / revenue {e}", False),
+    ("dso", "Số ngày phải thu {e}", "Days sales outstanding {e}", True),
+    ("m_score", "Beneish M-Score {e}", "Beneish M-Score {e}", True),
+    ("forecast_growth_mid", "Tăng trưởng dự báo {n}", "Forecast growth {n}", False),
+    ("forecast_revenue_mid", "Doanh thu dự báo {n}", "Forecast revenue {n}", False),
+]
+
+
+def comparison_table(state: State) -> list[str]:
+    """Key figures of each company next to each other. Built from the metrics, no model involved."""
+    intent, metrics = state["intent"], state["metrics"]
+    lang, e = intent.language, intent.end_year
+    by_name: dict[tuple[str, str], list] = {}
+    for m in metrics.values():
+        by_name.setdefault((m.ticker, m.name), []).append(m)
+
+    def cell(ticker: str, name: str, with_pct: bool) -> str:
+        found = by_name.get((ticker, name), [])
+        # the latest period on record: the end year for annual figures, the whole span for a CAGR
+        m = max(found, key=lambda x: x.period, default=None) if name == "revenue_cagr" else \
+            next((x for x in found if x.period in (str(e), str(e + 1))), None)
+        if m is None:
+            return "—"
+        text = format_metric(m, lang)
+        if name.startswith("forecast_"):
+            lo, hi = (metrics.get(m.id.replace("_mid.", f"_{k}.")) for k in ("lo", "hi"))
+            if lo and hi:
+                text += f" ({format_metric(lo, lang)} – {format_metric(hi, lang)})"
+        pct = metrics.get(f"{ticker}.{name}_sector_pct.{e}") if with_pct else None
+        return f"{text} ({format_metric(pct, lang)})" if pct else text
+
+    head = "Chỉ tiêu" if lang == "vi" else "Metric"
+    lines = [f"| {head} | " + " | ".join(intent.tickers) + " |", "|---|" + "---|" * len(intent.tickers)]
+    for name, vi, en, with_pct in COMPARISON_ROWS:
+        cells = [cell(t, name, with_pct) for t in intent.tickers]
+        if any(c != "—" for c in cells):
+            lines.append(f"| {(vi if lang == 'vi' else en).format(s=intent.start_year, e=e, n=e + 1)} | " + " | ".join(cells) + " |")
+    note = ("Trong ngoặc là vị trí của công ty trong ngành của chính nó (phân vị 100 là cao nhất); với dự báo, trong ngoặc là khoảng dự báo."
+            if lang == "vi" else
+            "Brackets give the company's position within its own sector (percentile 100 is the highest); for forecasts they give the interval.")
+    return lines + ["", note, ""]
+
 TEXT = {
     "vi": {
         "title": "Báo cáo nghiên cứu: {tickers} ({s}–{e})",
         "limits": "Giới hạn và lưu ý",
+        "side_by_side": "So sánh nhanh",
         "excerpts": "Đoạn trích liên quan (chưa được tổng hợp)",
         "excerpts_why": "Chưa cấu hình mô hình ngôn ngữ nên các đoạn dưới đây được trích nguyên văn từ báo cáo thường niên, chưa viết thành nhận định.",
         "confidence": "Độ tin cậy",
@@ -27,6 +80,7 @@ TEXT = {
     "en": {
         "title": "Research note: {tickers} ({s}–{e})",
         "limits": "Limits and caveats",
+        "side_by_side": "Side by side",
         "excerpts": "Related passages (not synthesised)",
         "excerpts_why": "No language model is configured, so the passages below are quoted from the annual reports as found, not turned into statements.",
         "confidence": "Confidence",
@@ -55,6 +109,8 @@ def render(state: State) -> dict:
         return f"{body} {marks}".strip()
 
     out = ["# " + t["title"].format(tickers=", ".join(intent.tickers), s=intent.start_year, e=intent.end_year), ""]
+    if len(intent.tickers) > 1:
+        out += [f"## {t['side_by_side']}", ""] + comparison_table(state)
     kept = [c for c in state["checked"] if c.kept]
     for key, titles in SECTION_TITLES.items():
         claims = [c for c in kept if c.section == key]

@@ -23,8 +23,13 @@ if __name__ == "__main__":
         ticker, year = m.group(1), int(m.group(2))
         start = time.time()
         chunks, info = parse_pdf(path, ticker, year)
+        if info["text_pages"] < 0.1 or not chunks:
+            print(f"{path.name}: bỏ qua, là bản scan ({info['text_pages']:.0%} số trang có chữ); cần bản PDF có lớp text hoặc OCR", flush=True)
+            continue
+        if info["text_pages"] < 0.6:
+            print(f"{path.name}: chỉ {info['text_pages']:.0%} số trang có chữ, phần còn lại là ảnh và không tìm kiếm được", flush=True)
         vectors = embed([c.embed_text() for c in chunks])
         store_document(ticker, year, chunks, vectors, info)
         n = {k: sum(c.kind == k for c in chunks) for k in ("text", "table", "numeric")}
         print(f"{path.name}: {info['n_pages']} trang → {n['text']} chunk văn bản, {n['table']} chunk bảng, "
-              f"{n['numeric']} chunk báo cáo tài chính (không tìm kiếm) trong {time.time() - start:.0f}s")
+              f"{n['numeric']} chunk báo cáo tài chính (không tìm kiếm) trong {time.time() - start:.0f}s", flush=True)

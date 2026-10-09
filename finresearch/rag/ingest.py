@@ -174,5 +174,7 @@ def parse_pdf(path: str | Path, ticker: str, year: int) -> tuple[list[Chunk], di
             for n, part in enumerate(_pack_rows(_rows(kept, doc[i].rect.height)), 1):
                 chunks.append(Chunk(id=f"{ticker}-AR{year}-p{i + 1:03d}-t{n}", kind="table", text=part, **base))
     info = {"file": path.name, "n_pages": len(doc), "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-            "body_size": body_size, "chrome_lines": len(chrome)}
+            "body_size": body_size, "chrome_lines": len(chrome),
+            # share of pages that carry a text layer; a scan has none and cannot be searched without OCR
+            "text_pages": sum(len(" ".join(l.text for l in lines)) >= 200 for lines in pages) / max(len(doc), 1)}
     return chunks, info

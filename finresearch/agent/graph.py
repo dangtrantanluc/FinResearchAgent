@@ -31,7 +31,16 @@ def build_graph(llm: LLM | None = None, search_mode: Mode = "hybrid"):
         return {"intent": result} if isinstance(result, Intent) else {"error": result}
 
     def draft(state: State) -> dict:
-        return {"draft": llm_draft(state, llm) if llm else template_draft(state)}
+        if llm is None:
+            return {"draft": template_draft(state)}
+        try:
+            return {"draft": llm_draft(state, llm)}
+        except (RuntimeError, ValueError) as exc:  # every model out of quota or overloaded, or no valid JSON
+            english = state["intent"].language == "en"
+            note = (f"The language model did not answer, so this note is written from fixed templates and has no qualitative statements. ({exc})"
+                    if english else
+                    f"Mô hình ngôn ngữ không trả lời, nên báo cáo này viết theo mẫu câu cố định và không có nhận định định tính. ({exc})")
+            return {"draft": template_draft(state), "notes": state.get("notes", []) + [note]}
 
     g = StateGraph(State)
     g.add_node("intent", intent)

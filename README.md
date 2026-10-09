@@ -17,6 +17,29 @@ Công cụ nghiên cứu tài chính cho doanh nghiệp niêm yết Việt Nam: 
 | Agent | `finresearch/agent/` | Luồng LangGraph: đọc câu hỏi, lấy số, tìm đoạn trích, viết nháp, kiểm tra từng nhận định, dựng báo cáo |
 | Giao diện | `app.py` | Streamlit: báo cáo, nhận định bị loại, số liệu đã dùng, biểu đồ SHAP, đoạn trích |
 
+## Kiến trúc
+
+```mermaid
+flowchart TD
+    Q([Câu hỏi]) --> I[intent<br/>mã, giai đoạn, ngôn ngữ]
+    I --> G[gather<br/>số liệu, ratios, vị trí trong ngành,<br/>tín hiệu rủi ro, dự báo và SHAP]
+    G --> P[plan_queries<br/>câu hỏi cho từng mục của báo cáo]
+    P --> R[retrieve<br/>vector + từ khóa, gộp bằng RRF]
+    R --> D[draft<br/>Gemini viết nhận định,<br/>số liệu chỉ là tham chiếu]
+    D --> V[validate<br/>kiểm tra cứng, rồi Gemini chấm]
+    V --> O([render<br/>điền số, đánh số trích dẫn])
+
+    PG[(Postgres + pgvector)] --> G
+    PG --> R
+    A[artifacts/<br/>XGBoost, khoảng dự báo] --> G
+
+    HF[BCTC kiểm toán bản OCR<br/>2015–2025] --> X[extract + kiểm tra<br/>đẳng thức kế toán] --> PG
+    X --> K[Kaggle: train, backtest, SHAP] --> A
+    PDF[Báo cáo thường niên PDF] --> C[tách theo trang, chunk, embed] --> PG
+```
+
+Nửa trên là luồng trả lời một câu hỏi; nửa dưới là ba đường chuẩn bị dữ liệu chạy trước. Mô hình ngôn ngữ chỉ xuất hiện ở hai ô `draft` và `validate`.
+
 ## Dữ liệu
 
 [`vduydong/ocr_annual_financials`](https://huggingface.co/datasets/vduydong/ocr_annual_financials): bản OCR của 18.231 BCTC kiểm toán năm 2015–2025, giấy phép CC BY-NC 4.0. Dữ liệu không nằm trong repo; script tự tải về `data/raw/` (khoảng 3 GB).
@@ -56,10 +79,21 @@ Bốn tool trả về danh sách `Metric`. Mỗi metric có ID dạng `FPT.reven
 Đặt PDF vào `data/reports/<MÃ>/<MÃ>_<NĂM>.pdf` (ví dụ `data/reports/FPT/FPT_2024.pdf`), rồi:
 
 ```bash
+.venv/bin/python scripts/fetch_reports.py MWG ELC --years 2021-2025   # tải BCTN (tùy chọn)
 .venv/bin/python scripts/ingest_reports.py               # tách, embed, lưu vào Postgres
 .venv/bin/python -m finresearch.rag.search "Vì sao doanh thu FPT tăng năm 2024?" --ticker FPT --year 2024
 .venv/bin/python scripts/eval_retrieval.py               # chấm trên eval/retrieval_fpt.jsonl
 ```
+
+**Kho hiện có** 13 báo cáo, khoảng 3.700 chunk:
+
+| Mã | Năm có trong kho | Ghi chú |
+|---|---|---|
+| FPT | 2021–2025 | Tải từ trang quan hệ cổ đông của FPT |
+| ELC | 2021–2025 | Bản 2023 chỉ có chữ ở 48% số trang |
+| MWG | 2022, 2023, 2025 | Bản 2021 và 2024 là ảnh scan, bị bỏ qua vì máy không cài OCR |
+
+Việc embed chạy trên GPU nếu có; đặt `FINRESEARCH_DEVICE=cpu` để chạy trên CPU khi GPU đang bận (chậm hơn khoảng 20 lần).
 
 Mỗi kết quả có ID dạng `FPT-AR2024-p037-c1` và số trang của file PDF, để báo cáo trích dẫn được `[BCTN FPT 2024, tr. 37]`. Có ba loại chunk:
 
@@ -118,12 +152,18 @@ Năm câu hỏi cố định chạy qua toàn bộ luồng với Gemini (`script
 | FPT 2022–2025, tiếng Việt | 19 | 19 | 0 | 0 | 11 | 10 | 35 giây |
 | FPT 2022–2025, tiếng Anh | 21 | 21 | 0 | 0 | 9 | 9 | 50 giây |
 | HPG 2023–2025 (kho không có BCTN) | 18 | 17 | 1 | 0 | 0 | — | 31 giây |
-| MWG 2022–2025, tiếng Anh (kho không có BCTN) | 17 | 17 | 0 | 0 | 0 | — | 69 giây |
-| So sánh FPT và ELC | 22 | 22 | 0 | 0 | 5 | 5 | 30 giây |
+| MWG 2022–2025, tiếng Anh | 20 | 19 | 0 | 1 | 10 | 9 | 52 giây |
+| So sánh FPT và ELC | 20 | 19 | 0 | 1 | 12 | 11 | 95 giây |
 
-Nhận định duy nhất bị loại dẫn tới một số liệu không tồn tại (dòng tiền kinh doanh 2025 của HPG, vốn đã bị loại ở bước kiểm tra đẳng thức kế toán).
+Tổng cộng 98 nhận định, giữ 95. Ba nhận định bị loại:
+
+- **HPG:** dẫn tới một số liệu không tồn tại (dòng tiền kinh doanh 2025, vốn đã bị loại ở bước kiểm tra đẳng thức kế toán).
+- **MWG:** nói về sự sụt giảm năm 2023, trong khi các đoạn trích được dẫn chỉ nói về năm 2025.
+- **FPT trong bài so sánh:** dùng số "cổ tức đã trả" 4.574 tỷ từ báo cáo lưu chuyển tiền tệ, trong khi đoạn trích ghi 3.185 tỷ. Hai số đúng theo hai phạm vi khác nhau (dòng trên báo cáo lưu chuyển tiền tệ gồm cả cổ tức công ty con trả cho cổ đông không kiểm soát); nhãn của chỉ tiêu này đã được sửa cho rõ sau lần chạy đó.
 
 Tỷ lệ giữ lại cao không chứng minh được bộ kiểm tra có tác dụng, nên có thêm phép thử gài nhận định (`scripts/eval_judge.py`): 3 nhận định đúng và 5 nhận định sai (nguyên nhân bịa, nói ngược tài liệu, số liệu dùng sai nghĩa, khẳng định vượt ra ngoài số liệu, rủi ro không có trong đoạn trích). Model chấm `gemini-3.5-flash-lite` xử lý đúng cả 8. Cả hai phép thử đều nhỏ và mới chạy một lần.
+
+**So sánh nhiều công ty:** câu hỏi có từ hai mã trở lên (ví dụ "So sánh FPT và MWG giai đoạn 2023–2025") thì báo cáo mở đầu bằng một bảng đặt các chỉ tiêu chính cạnh nhau, kèm vị trí của mỗi công ty trong ngành của nó và khoảng dự báo. Bảng này do code dựng từ số liệu, không qua mô hình ngôn ngữ.
 
 **Không có API key** thì luồng vẫn chạy: bản nháp được viết theo mẫu câu cố định từ số liệu, các đoạn trích tìm được in nguyên văn ở cuối, và báo cáo ghi rõ chưa có nhận định định tính. Chế độ này cũng là thứ các test dùng.
 
@@ -156,4 +196,6 @@ Mô hình xếp hạng được công ty tăng nhanh / chậm nhưng không thu 
 - Số liệu từ OCR. Dòng nào không khớp đẳng thức kế toán thì bị loại, nhưng lỗi ở dòng không có đẳng thức kiểm tra vẫn có thể lọt.
 - Bộ dữ liệu thiếu một số mã (ví dụ CMG) và mô hình không dùng ngân hàng, chứng khoán, bảo hiểm.
 - Ngưỡng M-Score −1,78 được ước lượng trên doanh nghiệp Mỹ; ở đây chỉ dùng để xếp hạng trong ngành.
+- Báo cáo thường niên dạng ảnh scan không tìm kiếm được; cần bản PDF có lớp text hoặc cài thêm OCR.
+- Khi mọi model Gemini đều hết hạn mức hoặc quá tải, báo cáo tự chuyển sang viết theo mẫu và ghi rõ điều đó ở mục lưu ý.
 - Không có số liệu quý: dữ liệu quý của vnstock bản miễn phí có nhãn kỳ không khớp nội dung, nên không dùng.

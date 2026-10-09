@@ -19,7 +19,7 @@ def _response(text):
 def llm(monkeypatch):
     monkeypatch.setenv("GEMINI_MODEL_STRONG", "new-model, old-model")
     monkeypatch.setenv("GEMINI_MODEL_FAST", "old-model")
-    monkeypatch.setattr(GeminiLLM, "ROUND_WAIT", 0)
+    monkeypatch.setattr(GeminiLLM, "ROUND_WAITS", (0, 0))
     return GeminiLLM(api_key="not-a-real-key")
 
 
@@ -51,6 +51,6 @@ def test_every_model_failing_raises_with_the_list_tried(llm, monkeypatch):
         raise errors.APIError(429, {"error": {"code": 429, "message": "quota", "status": "RESOURCE_EXHAUSTED"}})
 
     monkeypatch.setattr(llm, "_call", call)
-    with pytest.raises(RuntimeError, match="new-model, old-model"):
+    with pytest.raises(RuntimeError, match="new-model: 429, old-model: 429"):
         llm.generate(Reply, "sys", "prompt", tier="strong")
     assert len(llm.calls) == 4  # two passes over two models
